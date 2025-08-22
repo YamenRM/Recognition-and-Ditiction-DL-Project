@@ -16,15 +16,15 @@ transform = transforms.Compose([
     transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])  # [-1,1] range
 ])
 
-def face_preprocessing(image_path):
+def face_preprocessing(frame):
     # Load and convert image
-    image = cv2.imread(image_path)
+    image = cv2.imread(frame)
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
     # Detect faces
     boxes, _ = mtcnn.detect(image_rgb)
-
     face_tensors = []
+
     if boxes is not None:
         for box in boxes:
             x1, y1, x2, y2 = map(int, box)
@@ -36,6 +36,6 @@ def face_preprocessing(image_path):
             face_tensors.append(tensor_face)
 
             # Draw bounding box for visualization
-            cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
-    return face_tensors, image  # list of faces + annotated image
+    return face_tensors, boxes  # list of faces + boxes

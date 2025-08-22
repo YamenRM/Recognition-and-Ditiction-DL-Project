@@ -1,42 +1,25 @@
 from ultralytics import YOLO
 import cv2
+import numpy as np
 
-def detect_objects(image_path):
-    # Load the YOLOv8 model
-    model = YOLO('models/yolov8n.pt')
+# load the yolo model
+model= YOLO('models/yolov8n.pt')
 
-    # Load the image 
-    image = cv2.imread(image_path)
+# object ditiction func
+def object_dit(frame):
+    results = model(frame , cof=0.3 , verbose=False)[0]
+     # make a list for the diticted items
+    detections = []
 
-    # Perform object detection
-    results = model(image)
+    # draw boxes and labels
+    annotated = results.plot()
+    for box, conf, cls in zip(results.boxes.xyxy, results.boxes.conf, results.boxes.cls):
+        x1, y1, x2, y2 = map(int, box.tolist())
+        label = results.names[int(cls)]
+        detections.append((label, float(conf), (x1, y1, x2, y2)))
+    return annotated, detections
 
-    # Draw bounding boxes on the image
-    annotated_image = results[0].plot()
-
-    # show the name of the detected object
-    for box in results[0].boxes:
-     cls_id = int(box.cls)
-     label = model.names[cls_id]
-     conf = box.conf.item()
-     print(f"Detected: {label} ({conf:.2f})")
-    # use the live camera feed for live detection
-    cap = cv2.VideoCapture(0)
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        # Perform object detection on the frame
-        results = model(frame)
-        
-        # Draw bounding boxes on the frame
-        annotated_frame = results[0].plot()
-        cv2.imshow('Object Detection', annotated_frame)
-
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-    cap.release()
-    cv2.destroyAllWindows()
+    
+    
 
 
