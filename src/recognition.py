@@ -13,6 +13,8 @@ from PIL import Image
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 model = InceptionResnetV1(pretrained='vggface2').eval().to(device)
 
+
+# train the model on the data 
 def train_face_recognizer(data_dir ='DATA' , model_path='models/face_svm.pkl') :
  embedings , labels = [] , []
 
@@ -29,7 +31,7 @@ def train_face_recognizer(data_dir ='DATA' , model_path='models/face_svm.pkl') :
                 continue
              # get embedings
             with torch.no_grad():
-                for t in face_tensors():
+                for t in face_tensors:
                      emb = model(t.unsqueeze(0).to(device))
                      embedings.append(emb.cpu().numpy()[0])
                      labels.append(person)

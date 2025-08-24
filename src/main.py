@@ -1,10 +1,10 @@
-# load the model once
+# load the model once offline then recomment it
 from recognition import train_face_recognizer
 train_face_recognizer(data_dir="DATA", model_path="models/face_svm.pkl")
 
 import cv2
 from recognition import recognize_faces
-from ditiction import detect_objects  
+from ditiction import object_dit 
 
 cap = cv2.VideoCapture(0)
 
@@ -14,7 +14,7 @@ while True:
         break
 
     # object detection
-    frame, objects = detect_objects(frame)
+    frame, objects = object_dit(frame)
 
     # face recognition
     frame, names = recognize_faces(frame, model_path="models/face_svm.pkl")
