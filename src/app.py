@@ -27,7 +27,7 @@ async def predict(file: UploadFile = File(...)):
     frame, objects = object_dit(frame)
 
     # Face recognition
-    frame, names = recognize_faces(frame)
+    frame, names = recognize_faces(frame/predict)
 
     # Convert image to bytes to return
     _, img_encoded = cv2.imencode('.jpg', frame)
