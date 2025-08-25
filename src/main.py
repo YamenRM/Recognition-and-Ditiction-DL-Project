@@ -1,6 +1,9 @@
-# load the model once offline then recomment it
-from recognition import train_face_recognizer
-train_face_recognizer(data_dir="DATA", model_path="models/face_svm.pkl")
+# load the model once  then recomment it
+
+#from recognition import train_face_recognizer
+#train_face_recognizer(data_dir="DATA", model_path="models/face_svm.pkl")
+
+
 
 import cv2
 from recognition import recognize_faces

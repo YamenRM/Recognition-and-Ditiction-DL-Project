@@ -7,7 +7,7 @@ model= YOLO('models/yolov8n.pt')
 
 # object ditiction func
 def object_dit(frame):
-    results = model(frame , cof=0.3 , verbose=False)[0]
+    results = model(frame , conf=0.3 , verbose=False)[0]
      # make a list for the diticted items
     detections = []
 

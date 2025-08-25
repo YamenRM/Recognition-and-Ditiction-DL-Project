@@ -18,7 +18,7 @@ transform = transforms.Compose([
 
 def face_preprocessing(frame):
     # Load and convert image
-    image = cv2.imread(frame)
+    image = frame
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
     # Detect faces
