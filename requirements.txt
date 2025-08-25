@@ -4,8 +4,8 @@ torchvision
 facenet-pytorch
 ultralytics
 opencv-python
-streamlit
 scikit-learn
 pillow
-matplotlib
-seaborn
+fastapi 
+joblib
+
