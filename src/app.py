@@ -1,5 +1,6 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File , Depends, HTTPException, Header
 import uvicorn
+import os
 import numpy as np
 import cv2
 from recognition import recognize_faces
@@ -9,6 +10,17 @@ import joblib
 
 app = FastAPI(title='smart ditiction')
 
+
+# fetch api key from the environment
+API_KEY = os.getenv('API_KEY')
+
+
+# intilize the function for the key
+def verify_api_key(x_api_key: str = Header(...)):
+    if x_api_key != API_KEY:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+
 #load the model
 model=joblib.load('models/face_svm.pkl')
 
@@ -16,8 +28,8 @@ model=joblib.load('models/face_svm.pkl')
 def home():
     return{"message": "AI Assistant API is running 🚀"}
 
-@app.post('/predict') 
-async def predict(file: UploadFile = File(...)):
+@app.post('/predict/') 
+async def predict(file: UploadFile = File(...) , x_api_key : str = Depends(verify_api_key)):
     # Read image bytes
     image_bytes = await file.read()
     nparr = np.frombuffer(image_bytes, np.uint8)
@@ -27,7 +39,7 @@ async def predict(file: UploadFile = File(...)):
     frame, objects = object_dit(frame)
 
     # Face recognition
-    frame, names = recognize_faces(frame/predict)
+    frame, names = recognize_faces(frame)
 
     # Convert image to bytes to return
     _, img_encoded = cv2.imencode('.jpg', frame)
