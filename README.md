@@ -1,7 +1,7 @@
 # 🤖 Real-Time Face Recognition & Object Detection
 
 ## Description:
-  A real-time AI Assistant that detects objects and recognizes faces using deep learning. Built with PyTorch, YOLOv8, and FaceNet, and deployed via FastAPI for easy API access. The app supports live webcam feeds and secure API access. 🚀
+  Real-time  detects objects and recognizes faces using deep learning. Built with PyTorch, YOLOv8, and FaceNet, and deployed via FastAPI for easy API access. The app supports live webcam feeds and secure API access. 🚀
 
 ## ✨ Features
 
