@@ -8,4 +8,5 @@ scikit-learn
 pillow
 fastapi 
 joblib
+uvicorn
 
