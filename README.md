@@ -34,9 +34,6 @@
   └─ README.md
 ```
 
-## 🌐 try it live:
-https://recognition-and-ditiction-api.onrender.com
-
 
 
 ## ⚡ Installation
